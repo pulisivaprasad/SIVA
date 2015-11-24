@@ -13,6 +13,7 @@
 		DA64AC2D1C02D7720073F204 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA64AC2C1C02D7720073F204 /* Images.xcassets */; };
 		DA64AC301C02D7720073F204 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA64AC2E1C02D7720073F204 /* LaunchScreen.xib */; };
 		DA64AC3C1C02D7720073F204 /* SwiftSampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64AC3B1C02D7720073F204 /* SwiftSampleAppTests.swift */; };
+		DA64AC461C02F8820073F204 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = DA64AC451C02F8820073F204 /* image.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		DA64AC351C02D7720073F204 /* SwiftSampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftSampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA64AC3A1C02D7720073F204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA64AC3B1C02D7720073F204 /* SwiftSampleAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSampleAppTests.swift; sourceTree = "<group>"; };
+		DA64AC451C02F8820073F204 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				DA64AC251C02D7720073F204 /* AppDelegate.swift */,
 				DA64AC271C02D7720073F204 /* ViewController.swift */,
+				DA64AC451C02F8820073F204 /* image.png */,
 				DA64AC291C02D7720073F204 /* Main.storyboard */,
 				DA64AC2C1C02D7720073F204 /* Images.xcassets */,
 				DA64AC2E1C02D7720073F204 /* LaunchScreen.xib */,
@@ -195,6 +198,7 @@
 				DA64AC2B1C02D7720073F204 /* Main.storyboard in Resources */,
 				DA64AC301C02D7720073F204 /* LaunchScreen.xib in Resources */,
 				DA64AC2D1C02D7720073F204 /* Images.xcassets in Resources */,
+				DA64AC461C02F8820073F204 /* image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
