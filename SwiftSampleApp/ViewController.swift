@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITextFieldDelegate {
+class ViewController: UIViewController,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate {
  var myView = UIView()
  var myDatePicker = UIDatePicker()
     
@@ -38,6 +38,13 @@ class ViewController: UIViewController,UITextFieldDelegate {
         myTextField.layer.cornerRadius = 6
         self.view .addSubview(myTextField)
         
+        //UITextView creation
+        let myTextView = UITextView()
+        myTextView.delegate = self
+        myTextView.backgroundColor = UIColor.lightGrayColor()
+        myTextView.frame = CGRectMake(150, 150, 200, 60)
+        self.view.addSubview(myTextView)
+        
         //Label creation
         let myLabel = UILabel()
         myLabel.backgroundColor = UIColor.clearColor()
@@ -51,8 +58,16 @@ class ViewController: UIViewController,UITextFieldDelegate {
         myImageView.frame = CGRectMake(40, 170, 80, 80)
         myImageView.image = UIImage(named: "image.png")
         myImageView.clipsToBounds = true
+        myImageView.tag = 30
+        myImageView.userInteractionEnabled = true
         myImageView.layer.cornerRadius = myImageView.frame.size.height/2
         self.view .addSubview(myImageView)
+        
+        //UITapgestureRecognizer
+        let imageaction = UITapGestureRecognizer()
+        imageaction.numberOfTapsRequired = 1
+        imageaction.addTarget(self, action: "image_Click:")
+        myImageView.addGestureRecognizer(imageaction)
         
         let  items = ["siva","prasad","reddy"]
         
@@ -78,7 +93,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         mySlider.minimumValue = 0
         mySlider.maximumValue = 5
         mySlider.continuous = true
-        mySlider.addTarget(self, action: "mySlider_ValueChange:", forControlEvents: UIControlEvents.ValueChanged)
+        mySlider.addTarget(self, action: "mySlider_ValueChange:", forControlEvents:UIControlEvents.ValueChanged)
         mySlider.addTarget(self, action: "mySlider_Click:", forControlEvents: UIControlEvents.TouchUpInside)
         mySlider.tintColor = UIColor.redColor()
         self.view .addSubview(mySlider)
@@ -95,7 +110,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         //Datepicker creation
         let datefield = UITextField()
-        datefield.frame = CGRectMake(160, 20, 150, 40)
+        datefield.frame = CGRectMake(160, 20, 200, 40)
         datefield.tag = 20
         datefield.backgroundColor = UIColor.lightGrayColor()
         datefield.delegate = self
@@ -121,7 +136,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         //myDatePicker.hidden = true
         //myDatePicker.addTarget(self, action: "dateSelection:", forControlEvents: UIControlEvents.ValueChanged)
         myView.addSubview(myDatePicker)
-        
     }
     
     //MARK:-Button Action
@@ -143,13 +157,11 @@ class ViewController: UIViewController,UITextFieldDelegate {
         var textField = UITextField()
         textField = self.view .viewWithTag(20) as UITextField
         var dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .ShortStyle
-        dateFormatter.dateFormat = "dd:MM:yyyy-HH:mm"
+        dateFormatter.dateFormat = "dd:MM:yyyy-HH:mm:a"
         var strDate = dateFormatter.stringFromDate(myDatePicker.date)
         textField.text = strDate
         //String(format: "%i", selecteddate.date)
         myView.hidden = true
-        
     }
     
     //MARK:-TextField Action
@@ -166,6 +178,69 @@ class ViewController: UIViewController,UITextFieldDelegate {
         else{
             myView.hidden = true
         }
+    }
+    
+    //MARK:-TextView delegate Action
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
+    
+    //MARK:-ImageView Action
+    func image_Click(sender:UITapGestureRecognizer){
+        //UIAction sheet
+        let actionSheet = UIActionSheet(title: "Select some one", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Camera", "Camera library")
+        actionSheet.showInView(self.view)
+    }
+    
+    //MARK:-Action sheet Button Actions
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex{
+        case 0:
+            println("cancel")
+            break;
+        case 1:
+             println("camera")
+             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+             {
+                let imagPicker = UIImagePickerController()
+                imagPicker.delegate = self
+                imagPicker.sourceType = UIImagePickerControllerSourceType.Camera;
+                //imagPicker.mediaTypes = [kUTTypeImage as String]
+                imagPicker.allowsEditing = false
+                self.presentViewController(imagPicker, animated: true, completion: nil)
+             }
+             else{
+                let alert = UIAlertView(title: "", message: "This Divice Camera is Not Available", delegate: self, cancelButtonTitle: "OK")
+                alert.show()
+             }
+            break;
+        case 2:
+                let imagPicker = UIImagePickerController()
+                imagPicker.delegate = self
+                imagPicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+                //imag.mediaTypes = kUTTypeImage
+                imagPicker.allowsEditing = false
+                self.presentViewController(imagPicker, animated: true, completion: nil)
+            break;
+        default:
+            break;
+        }
+    }
+    
+    //Mark:-ImagePicker Delegates
+     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        var imageview = UIImageView()
+        imageview = self.view .viewWithTag(30) as UIImageView
+        
+        imageview.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //MARK:-DatePicker Action
@@ -211,4 +286,3 @@ class ViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
-
